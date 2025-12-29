@@ -10,7 +10,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			vim.lsp.enable({ "lua_ls", "hls", "ts_ls" })
+			vim.lsp.enable({ "lua_ls", "hls", "vtsls", "eslint_lsp" })
             vim.diagnostic.config({
                 virtual_text = true,
                 signs = true,
