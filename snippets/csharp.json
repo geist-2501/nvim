@@ -1,0 +1,35 @@
+{
+  "C# Class": {
+    "prefix": "cls",
+    "body": [
+      "public class ${1:ClassName}",
+      "{",
+      "    $0",
+      "}"
+    ]
+  },
+  "C# Interface": {
+    "prefix": "iface",
+    "body": [
+      "public interface ${1:IName}",
+      "{",
+      "    $0",
+      "}"
+    ]
+  },
+  "C# Record": {
+    "prefix": "rec",
+    "body": [
+      "public record ${1:RecordName}($0);"
+    ]
+  },
+  "C# Enum": {
+    "prefix": "enm",
+    "body": [
+      "public enum ${1:EnumName}",
+      "{",
+      "    $0",
+      "}"
+    ]
+  }
+}

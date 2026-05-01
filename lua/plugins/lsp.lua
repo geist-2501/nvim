@@ -82,6 +82,13 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
+                providers = {
+                    snippets = {
+                        opts = {
+                            search_paths = { vim.fn.stdpath("config") .. "/snippets" },
+                        },
+                    },
+                },
             },
         },
         opts_extend = { "sources.default" }
