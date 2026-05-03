@@ -44,6 +44,12 @@ return {
                     -- Refactoring (maps to Rider's Rename, Alt+Enter, Refactor This)
                     map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
                     map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code actions / refactor")
+                    map("n", "<leader>oi", function()
+                        vim.lsp.buf.code_action({
+                            apply = true,
+                            context = { only = { "source.organizeImports" } },
+                        })
+                    end, "Organize imports")
 
                     -- Signature help in insert mode (Rider's Ctrl+P parameter info)
                     map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
@@ -95,11 +101,26 @@ return {
     },
     {
         'seblyng/roslyn.nvim',
+        ft = "cs",
         ---@module 'roslyn.config'
         ---@type RoslynNvimConfig
         opts = {
-            -- your configuration comes here; leave empty for default settings
             broad_search = false
         },
+        config = function(_, opts)
+            require("roslyn").setup(opts)
+
+            -- Attach running roslyn client to new cs buffers without restarting nvim
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "cs",
+                callback = function(args)
+                    for _, client in ipairs(vim.lsp.get_clients({ name = "roslyn" })) do
+                        if not vim.lsp.buf_is_attached(args.buf, client.id) then
+                            vim.lsp.buf_attach_client(args.buf, client.id)
+                        end
+                    end
+                end,
+            })
+        end,
     }
 }
